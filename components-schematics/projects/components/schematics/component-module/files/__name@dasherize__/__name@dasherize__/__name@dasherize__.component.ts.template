@@ -1,0 +1,64 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  HostListener,
+} from '@angular/core';<% if(controlValueAccessor) { %>
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';<%}%>
+
+import {<% if(controlValueAccessor) { %>
+  <%= classify(name) %>ComponentData,<%}%>
+  <%= classify(name) %>ComponentService,
+} from './<%= name %>-component.service';
+
+@Component({
+  selector: 'app-<%= name %>',
+  templateUrl: './<%= name %>.component.html',
+  styleUrls: ['./<%= name %>.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,<% if(controlValueAccessor) { %>
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => <%= classify(name) %>Component),
+      multi: true,
+    }
+  ],<%}%>
+})
+export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> implements ControlValueAccessor <%}%> {<% if(controlValueAccessor) { %>
+  /**
+   * Keep a reference to the "OnChanged" function provided by angular
+   * (ControlValueAccessor)
+   */
+  private _onChange: (data: <%= classify(name) %>ComponentData) => void;
+
+  /**
+   * Keep a reference for the 'OnTouched' function provided by angular
+   * (ControlValueAccessor)
+   */
+  @HostListener('focusout') _onTouched: () => void;<%}%>
+
+  constructor(private _componentService: <%= classify(name) %>ComponentService) {}<% if(controlValueAccessor) { %>
+
+  /** Implements da ControlValueAccessor */
+  writeValue(data: <%= classify(name) %>ComponentData): void {
+    throw new Error('Method not implemented.');
+  }
+
+  /** Implements da ControlValueAccessor */
+  registerOnChange(fn: (data: <%= classify(name) %>ComponentData) => void): void {
+    this._onChange = fn;
+  }
+
+  /** Implements da ControlValueAccessor */
+  registerOnTouched(fn: () => void): void {
+    this._onTouched = fn;
+  }
+
+  /** Implements da ControlValueAccessor */
+  setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
+  }<%}%>
+}

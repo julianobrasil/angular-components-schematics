@@ -20,6 +20,11 @@
       "$default": {
         "$source": "projectName"
       }
+    },
+    "controlValueAccessor": {
+      "type": "boolean",
+      "description": "Wether to implements the control value accessor interface",
+      "default": "true"
     }
    },
   "required": [
