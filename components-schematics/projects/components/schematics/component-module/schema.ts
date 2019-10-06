@@ -7,4 +7,7 @@ export interface Schema {
 
   // The name of the project.
   project?: string;
+
+  /** Wether to implements control value accessor interface */
+  controlValueAccessor?: boolean;
 }

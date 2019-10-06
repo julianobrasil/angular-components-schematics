@@ -1,0 +1,2 @@
+<h2><%= classify(name) %> works!</h2>
+<button color="theme" mat-raised-button>I'm dummy</button>
