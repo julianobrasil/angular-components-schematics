@@ -5,8 +5,12 @@ import {
   HostListener,
 } from '@angular/core';<% if(controlValueAccessor) { %>
 import {
+  AbstractControl,
   ControlValueAccessor,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator,
 } from '@angular/forms';<%}%>
 
 import {<% if(controlValueAccessor) { %>
@@ -24,10 +28,15 @@ import {<% if(controlValueAccessor) { %>
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => <%= classify(name) %>Component),
       multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => <%= classify(name) %>Component),
+      multi: true,
     }
   ],<%}%>
 })
-export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> implements ControlValueAccessor <%}%> {<% if(controlValueAccessor) { %>
+export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> implements ControlValueAccessor, Validator<%}%> {<% if(controlValueAccessor) { %>
   /**
    * Keep a reference to the "OnChanged" function provided by angular
    * (ControlValueAccessor)
@@ -47,18 +56,23 @@ export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> impl
     throw new Error('Method not implemented.');
   }
 
-  /** Implements da ControlValueAccessor */
+  /** Implements ControlValueAccessor */
   registerOnChange(fn: (data: <%= classify(name) %>ComponentData) => void): void {
     this._onChange = fn;
   }
 
-  /** Implements da ControlValueAccessor */
+  /** Implements ControlValueAccessor */
   registerOnTouched(fn: () => void): void {
     this._onTouched = fn;
   }
 
-  /** Implements da ControlValueAccessor */
+  /** Implements ControlValueAccessor */
   setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
+  }
+  
+  /** Implements Validator */
+  validate(control: AbstractControl): ValidationErrors {
     throw new Error('Method not implemented.');
   }<%}%>
 }
