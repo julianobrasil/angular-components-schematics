@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "ng-add": {
+      "description": "Add the library to the project.",
+      "factory": "./ng-add/index#ngAdd"
+    },
+    "simple-component-module": {
+      "description": "Generate a module with a exported component and the material library inside.",
+      "factory": "./simple-component-module/index#simpleComponentModule",
+      "schema": "./simple-component-module/schema.json"
+    }
+  }
+}

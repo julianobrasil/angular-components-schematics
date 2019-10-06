@@ -1,0 +1,40 @@
+{
+  "name": "@julianobrasil/schematics-components",
+  "version": "1.0.0-alpha.1",
+  "license": "MIT",
+  "description": "@angular schematics for generate components",
+  "keywords": [
+    "@angular",
+    "schematics",
+    "components",
+    "module"
+  ],
+  "author": {
+    "name": "Juliano Pável Brasil Custódio",
+    "email": "juliano.brasil@gmail.com"
+  },
+  "homepage": "https://github.com/julianobrasil/angular-components-schematics#readme",
+  "bugs": {
+    "url": "https://github.com/julianobrasil/angular-components-schematics/issues",
+    "email": "juliano.brasil@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/julianobrasil/angular-components-schematics.git"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+    "copy:schemas": "cp --parents schematics/*/schema.json ../../dist/components/",
+    "copy:files": "cp --parents -p -r schematics/*/files/** ../../dist/components/",
+    "copy:collection": "cp schematics/collection.json ../../dist/components/schematics/collection.json",
+    "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection"
+  },
+  "peerDependencies": {
+    "@angular/animations": "~8.2.8",
+    "@angular/common": "^8.2.9",
+    "@angular/core": "^8.2.9",
+    "@angular/cdk": "~8.2.2",
+    "@angular/material": "~8.2.2"
+  },
+  "schematics": "./schematics/collection.json"
+}
