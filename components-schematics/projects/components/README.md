@@ -28,9 +28,10 @@ Then you can run the Schematics
 
 ### `ControlValueAccessor` interface
 
-All the generated component are built with two features:
+All the generated components are built with two features:
   - A component service (in the same directory of the component) containing an empty
-    interface named after the component name suffixed with "Data"
+    interface named after the component name suffixed with "Data". The service is
+    already injected in the component and its scoped to the whole app
   - A skeleton for the `ControlValueAccessor`
     - If you want to disable the generation of the `ControlValueAccessor` implementation,
       just add --controlValueAccessor false to the command line
@@ -65,3 +66,6 @@ Example: To generate all the files for a my-file component inside a `views` fold
 `app` folder:
 
 `ng g @julianobrasil/schematics-components:component --name my-data --path views`
+
+Note: Notice that the component isn't declared in any module of your project, so its your
+responsability to do so.
