@@ -1,0 +1,94 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  HostListener,
+} from '@angular/core';
+import {<% if(controlValueAccessor) { %>
+  AbstractControl,
+  ControlValueAccessor,<%}%>
+  FormGroup,<% if(controlValueAccessor) { %>
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator,<%}%>
+} from '@angular/forms';
+
+import {<% if(controlValueAccessor) { %>
+  <%= classify(name) %>ComponentData,<%}%>
+  <%= classify(name) %>ComponentService,
+} from './<%= name %>-component.service';
+
+@Component({
+  selector: 'app-<%= name %>',
+  templateUrl: './<%= name %>.component.html',
+  styleUrls: ['./<%= name %>.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,<% if(controlValueAccessor) { %>
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => <%= classify(name) %>Component),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => <%= classify(name) %>Component),
+      multi: true,
+    }
+  ],<%}%>
+})
+export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> implements ControlValueAccessor, Validator<%}%> {<% if(controlValueAccessor) { %>
+  /**
+   * Keep a reference to the "OnChanged" function provided by angular
+   * (ControlValueAccessor)
+   */
+  private _onChange: (data: <%= classify(name) %>ComponentData) => void;
+
+  /**
+   * Keep a reference for the 'OnTouched' function provided by angular
+   * (ControlValueAccessor)
+   */
+  @HostListener('focusout') _onTouched: () => void;<%}%>
+
+  /** Formulário do componente */
+  _loginForm: FormGroup = this.fb.group({
+    username: [null, Validators.required],
+    password: [null, Validators.required],
+  });
+
+  constructor(private fb: FormBuilder,
+              private _componentService: <%= classify(name) %>ComponentService) {}<% if(controlValueAccessor) { %>
+
+  /** Implements ControlValueAccessor */
+  writeValue(data: <%= classify(name) %>ComponentData): void {
+    throw new Error('Method not implemented.');
+  }
+
+  /** Implements ControlValueAccessor */
+  registerOnChange(fn: (data: <%= classify(name) %>ComponentData) => void): void {
+    this._onChange = fn;
+  }
+
+  /** Implements ControlValueAccessor */
+  registerOnTouched(fn: () => void): void {
+    this._onTouched = fn;
+  }
+
+  /** Implements ControlValueAccessor */
+  setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
+  }
+  
+  /** Implements Validator */
+  validate(control: AbstractControl): ValidationErrors {
+    throw new Error('Method not implemented.');
+  }<%}%>
+
+  /** Submete o formulário de login */
+  onSubmit() {
+    if (this._loginForm.invalid) {
+      return;
+    }
+    this._componentService.login({...this._loginForm.value});
+  }
+}

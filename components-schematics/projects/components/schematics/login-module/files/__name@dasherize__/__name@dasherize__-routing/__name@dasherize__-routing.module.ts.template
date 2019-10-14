@@ -1,0 +1,24 @@
+import {NgModule} from '@angular/core';
+import {Router, Route, RouterModule} from '@angular/router';
+
+import {<%= classify(name) %>Component} from '../<%= name %>/<%= name %>.component';
+import {<%= classify(name) %>RoutingComponent} from './<%= name %>-routing.component';
+
+const routes: Route[] = [
+  {
+    path: '',
+    component: <%= classify(name) %>RoutingComponent,
+    children: [
+      {
+        path: '',
+        component: <%= classify(name) %>Component,
+      }
+    ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class <%= classify(name) %>RoutingModule {}

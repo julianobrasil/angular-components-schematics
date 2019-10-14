@@ -1,47 +1,48 @@
 # Side note
 
-This is an alpha-version library yet. If you have a nice idea for a 
-componnt schematic, or a suggestion to improve the code base, api etc, 
+@julianobrasil/schematics-components is an alpha-version library yet. If you have a nice idea 
+for a componnt schematic, or a suggestion to improve the code base, api etc, 
 don't be shy and submit a PR.
 
 ## How to contribute
 
-If you want to compile the project, from the project root:
+If you want to compile the project, from the project root directory (the same as `angular.json`):
 
 `ng build components`
 
-Switch to components project and:
+Switch to components project directory copy the template files to `dist` directory keeping
+the directories tree:
 
 `npm run build`
 
-Switch back to project root and
+Switch back to project root directory and create a link to the dist directory:
 
 `npm link dist/component`
 
-Then you can run the Schematics
+Then you can run the Schematics:
 
-# Using @julianobrasil/schematics-components 
+# Using the library
 
 ## Install the schematics library
 
 `npm install --save-dev @julianobrasil/schematics-components`
 
-### `ControlValueAccessor` interface
+## Default Behavior
 
 All the generated components are built with two features out-of-the-box:
-  - A component service (in the same directory of the component) containing an empty
+  1 - A component service (in the same directory of the component): it contains an empty
     interface named after the component name suffixed with "Data". The service is
     already injected in the component and its scoped to the whole app. This is useful
-    to be used as a façade service.
+    to be used as a façade service (so you keep your component class cleaner).
     - For example: if your component class is `MyComponent`, the interface will be
     `MyComponentData` 
-  - A skeleton for the `ControlValueAccessor`
+  2 - A skeleton for the `ControlValueAccessor` (optional)
     - If you want to disable the generation of the `ControlValueAccessor` implementation,
-      just add --controlValueAccessor false to the command line
+      just add `--controlValueAccessor false` to the command line
 
 ## Available Schematics
 
-### component-module schematic
+### `component-module`/`login-module` schematic
 
 Generates a module folder containing:
 
@@ -77,9 +78,13 @@ app
                 my-data-routing.module.ts
 ```
 
-### component schematic
+To generate a login module, with a simple login screen, and named login:
 
-Generates a component folder containing:
+`ng g @julianobrasil/schematics-components:login-module --name login --path views`
+
+### `component` schematic
+
+Generates only a component folder containing:
 
   - A component along with its associated service
   - (Optional and added by default) the skeleton for the `ControlValueAccessor` implementation

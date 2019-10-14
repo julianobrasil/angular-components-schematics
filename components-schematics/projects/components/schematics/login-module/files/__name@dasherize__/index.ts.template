@@ -1,0 +1,3 @@
+export * from './<%= name %>.module';
+export {<%= classify(name) %>Component} from './<%= name %>/<%= name %>.component';<% if(controlValueAccessor) { %>
+export {<%= classify(name) %>ComponentData} from './<%= name %>/<%= name %>-component.service';<%}%>
