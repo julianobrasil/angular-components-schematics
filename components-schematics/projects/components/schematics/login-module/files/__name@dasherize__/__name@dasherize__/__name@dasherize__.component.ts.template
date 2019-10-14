@@ -4,18 +4,14 @@ import {
   forwardRef,
   HostListener,
 } from '@angular/core';
-import {
-  <% if(controlValueAccessor) { %>
+import {<% if(controlValueAccessor) { %>
   AbstractControl,
-  ControlValueAccessor,
-  <%}%>
-  <% if(controlValueAccessor) { %>
-  FormGroup,
-  <%}%>
+  ControlValueAccessor,<%}%>
+  FormGroup,<% if(controlValueAccessor) { %>
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator,
+  Validator,<%}%>
 } from '@angular/forms';
 
 import {<% if(controlValueAccessor) { %>
