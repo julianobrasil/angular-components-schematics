@@ -10,6 +10,11 @@
       "factory": "./component-module/index#componentModule",
       "schema": "./component-module/schema.json"
     },
+    "login-module": {
+      "description": "Generate a module with a exported login component and the material library inside.",
+      "factory": "./login-module/index#loginComponentModule",
+      "schema": "./login-module/schema.json"
+    },
     "component": {
       "description": "Generate a component with a component service and (optionally) the ControlValueAccessor implemented.",
       "factory": "./component/index#component",

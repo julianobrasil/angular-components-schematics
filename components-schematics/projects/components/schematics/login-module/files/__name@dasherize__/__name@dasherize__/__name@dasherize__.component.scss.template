@@ -1,0 +1,26 @@
+.full-width {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+}
+
+.login-card {
+  min-width: 120px;
+  max-width: 300px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+
+  &>* {
+    flex: 1;
+    margin-right: 20px;
+  }
+}

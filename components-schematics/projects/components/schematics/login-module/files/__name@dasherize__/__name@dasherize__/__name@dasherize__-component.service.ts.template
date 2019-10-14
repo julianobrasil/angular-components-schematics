@@ -1,0 +1,17 @@
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+
+export interface <%= classify(name) %>ComponentData {
+  username: string;
+  password: string;
+}
+
+@Injectable({providedIn: 'root'})
+export class <%= classify(name) %>ComponentService {
+  constructor(private _router: Router) {}
+
+  /** Valida o usuário logado e redireciona-o se for o caso */
+  login(data: LoginComponentData) {
+    // this._router.navigate(['path_to_your_route']);
+  }
+}
