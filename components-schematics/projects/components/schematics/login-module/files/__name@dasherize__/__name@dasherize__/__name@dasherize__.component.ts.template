@@ -7,11 +7,13 @@ import {
 import {<% if(controlValueAccessor) { %>
   AbstractControl,
   ControlValueAccessor,<%}%>
+  FormBuilder,
   FormGroup,<% if(controlValueAccessor) { %>
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,<%}%>
+  Validators,
 } from '@angular/forms';
 
 import {<% if(controlValueAccessor) { %>
