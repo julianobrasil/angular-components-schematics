@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component,<% if(controlValueAccessor) { %>
   forwardRef,
-  HostListener,
+  HostListener,<%}%>
 } from '@angular/core';
 import {<% if(controlValueAccessor) { %>
   AbstractControl,
