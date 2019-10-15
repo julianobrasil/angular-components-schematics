@@ -1,4 +1,6 @@
-<form [formGroup]="_loginForm" novalidate (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()"
+      [formGroup]="_loginForm" 
+      novalidate>
   <div class="container">
     <mat-card class="login-card">
       <mat-card-header>
@@ -24,7 +26,11 @@
       </mat-card-content>
       <mat-card-actions>
         <div class="actions-center">
-          <button class="action-login-button" color="primary" mat-raised-button>
+          <button (click)="onSubmit()"
+                  class="action-login-button" 
+                  color="primary" 
+                  mat-raised-button
+                  type="button">
             Login
           </button>
         </div>

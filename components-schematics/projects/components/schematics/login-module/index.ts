@@ -14,21 +14,22 @@ import {strings, normalize, experimental} from '@angular-devkit/core';
 
 import {Schema as ComponentModuleSchema} from './schema';
 
-export function loginComponentModule(
-    options: ComponentModuleSchema): Rule {
+export function loginComponentModule(options: ComponentModuleSchema): Rule {
   return (tree: Tree) => {
     const workspaceConfig = tree.read('/angular.json');
     if (!workspaceConfig) {
       throw new SchematicsException(
-          'Could not find Angular workspace configuration');
+        'Could not find Angular workspace configuration'
+      );
     }
 
     // convert workspace to string
     const workspaceContent = workspaceConfig.toString();
 
     // parse workspace string into JSON object
-    const workspace: experimental.workspace.WorkspaceSchema =
-        JSON.parse(workspaceContent);
+    const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(
+      workspaceContent
+    );
 
     if (!options.project) {
       options.project = workspace.defaultProject;
