@@ -7,28 +7,32 @@ import {
   applyTemplates,
   move,
   chain,
-  mergeWith
+  mergeWith,
+  Source,
 } from '@angular-devkit/schematics';
 
 import {strings, normalize, experimental} from '@angular-devkit/core';
+import {WorkspaceProject} from '@angular-devkit/core/src/experimental/workspace';
 
 import {Schema as ComponentModuleSchema} from './schema';
 
-export function component(
-    options: ComponentModuleSchema): Rule {
-  return (tree: Tree) => {
-    const workspaceConfig = tree.read('/angular.json');
+export function component(options: ComponentModuleSchema): Rule {
+  return (tree: Tree): Rule => {
+    const workspaceConfig: Buffer | null = tree.read('/angular.json');
+
     if (!workspaceConfig) {
       throw new SchematicsException(
-          'Could not find Angular workspace configuration');
+        'Could not find Angular workspace configuration',
+      );
     }
 
     // convert workspace to string
     const workspaceContent = workspaceConfig.toString();
 
     // parse workspace string into JSON object
-    const workspace: experimental.workspace.WorkspaceSchema =
-        JSON.parse(workspaceContent);
+    const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(
+      workspaceContent,
+    );
 
     if (!options.project) {
       options.project = workspace.defaultProject;
@@ -36,7 +40,7 @@ export function component(
 
     const projectName = options.project as string;
 
-    const project = workspace.projects[projectName];
+    const project: WorkspaceProject = workspace.projects[projectName];
 
     const projectType = project.projectType === 'application' ? 'app' : 'lib';
 
@@ -46,14 +50,14 @@ export function component(
       options.path = `${project.sourceRoot}/${projectType}/${options.path}`;
     }
 
-    const templateSource = apply(url('./files'), [
+    const templateSource: Source = apply(url('./files'), [
       applyTemplates({
         classify: strings.classify,
         dasherize: strings.dasherize,
         name: options.name,
-        controlValueAccessor: options.controlValueAccessor
+        controlValueAccessor: options.controlValueAccessor,
       }),
-      move(normalize(options.path as string))
+      move(normalize(options.path as string)),
     ]);
 
     return chain([mergeWith(templateSource)]);
