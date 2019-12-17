@@ -2,6 +2,9 @@ export interface Schema {
   // The name of the module.
   name: string;
 
+  // The declaring NgModule.
+  module?: string;
+
   // The path to create the module.
   path?: string;
 
