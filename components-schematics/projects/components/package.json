@@ -1,6 +1,6 @@
 {
   "name": "@julianobrasil/schematics-components",
-  "version": "2.0.1-alpha.7",
+  "version": "2.0.1-alpha.8",
   "license": "MIT",
   "description": "@angular schematics for generate components",
   "keywords": [
