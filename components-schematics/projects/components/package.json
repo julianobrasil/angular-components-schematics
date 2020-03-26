@@ -1,6 +1,6 @@
 {
   "name": "@julianobrasil/schematics-components",
-  "version": "2.0.1-alpha.4",
+  "version": "2.0.1-alpha.7",
   "license": "MIT",
   "description": "@angular schematics for generate components",
   "keywords": [
@@ -30,11 +30,11 @@
     "postbuild": "npm run copy:schemas && npm run copy:files && npm run copy:collection"
   },
   "peerDependencies": {
-    "@angular/animations": "~8.2.8",
-    "@angular/common": "^8.2.9",
-    "@angular/core": "^8.2.9",
-    "@angular/cdk": "~8.2.2",
-    "@angular/material": "~8.2.2"
+    "@angular/animations": "~9.1.0",
+    "@angular/common": "^9.1.0",
+    "@angular/core": "^9.1.0",
+    "@angular/cdk": "~9.2.0",
+    "@angular/material": "~9.2.0"
   },
   "schematics": "./schematics/collection.json"
 }
