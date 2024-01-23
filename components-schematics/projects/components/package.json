@@ -36,5 +36,8 @@
     "@angular/cdk": "~9.2.0",
     "@angular/material": "~9.2.0"
   },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "schematics": "./schematics/collection.json"
 }
