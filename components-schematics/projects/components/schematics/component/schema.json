@@ -1,9 +1,14 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsSimpleComponent",
+  "$id": "SchematicsSimpleComponent",
   "title": "Simple Component",
   "type": "object",
   "properties": {
+    "controlValueAccessor": {
+      "type": "boolean",
+      "description": "Wether to implements the control value accessor interface",
+      "default": true
+    },
     "name": {
       "description": "The name of the component.",
       "type": "string"
@@ -25,13 +30,11 @@
         "$source": "projectName"
       }
     },
-    "controlValueAccessor": {
+    "standalone": {
       "type": "boolean",
-      "description": "Wether to implements the control value accessor interface",
-      "default": "true"
+      "description": "Whether the component is standalone or not",
+      "default": true
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

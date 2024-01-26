@@ -29,6 +29,7 @@
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
+    "compilationMode": "partial",
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   }

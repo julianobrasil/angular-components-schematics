@@ -11,20 +11,26 @@ import {
   Source,
   UpdateRecorder,
 } from '@angular-devkit/schematics';
-import { strings, normalize, experimental, Path } from '@angular-devkit/core';
-import { dasherize, classify } from '@angular-devkit/core/src/utils/strings';
-import { WorkspaceProject } from '@angular-devkit/core/src/experimental/workspace';
-import { findModuleFromOptions, buildRelativePath } from '@schematics/angular/utility/find-module';
-import { addDeclarationToModule } from '@schematics/angular/utility/ast-utils';
-import { InsertChange, Change } from '@schematics/angular/utility/change';
-import { Schema as ComponentModuleSchema } from './schema';
+import {strings, normalize, workspaces, Path} from '@angular-devkit/core';
+import {dasherize, classify} from '@angular-devkit/core/src/utils/strings';
+import {
+  findModuleFromOptions,
+  buildRelativePath,
+} from '@schematics/angular/utility/find-module';
+import {addDeclarationToModule} from '@schematics/angular/utility/ast-utils';
+import {InsertChange, Change} from '@schematics/angular/utility/change';
+import {Schema as ComponentModuleSchema} from './schema';
 import {
   createSourceFile,
   ScriptTarget,
   SourceFile,
 } from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
+import {findProject} from '../utils/find-project';
 
-function readIntoSourceFile(host: Tree, modulePath: string | undefined): SourceFile | undefined {
+function readIntoSourceFile(
+  host: Tree,
+  modulePath: string | undefined,
+): SourceFile | undefined {
   if (modulePath === undefined) {
     throw new SchematicsException(`File ${modulePath} does not exist.`);
   }
@@ -44,10 +50,12 @@ function autoImport(options: ComponentModuleSchema): Rule {
 
     const classifiedName = classify(`${options.name}Component`);
 
-    const componentPath = `/${options.path}/`
-      + dasherize(options.name) + '/'
-      + dasherize(options.name)
-      + '.component';
+    const componentPath =
+      `/${options.path}/` +
+      dasherize(options.name) +
+      '/' +
+      dasherize(options.name) +
+      '.component';
 
     const relativePath: string = buildRelativePath(
       !modulePath ? '' : String(modulePath),
@@ -58,7 +66,7 @@ function autoImport(options: ComponentModuleSchema): Rule {
       source,
       !modulePath ? '' : String(modulePath),
       classifiedName,
-      relativePath
+      relativePath,
     );
 
     const declarationRecorder: UpdateRecorder = host.beginUpdate(
@@ -71,37 +79,18 @@ function autoImport(options: ComponentModuleSchema): Rule {
       }
     }
     host.commitUpdate(declarationRecorder);
-
   };
 }
 
 export function component(options: ComponentModuleSchema): Rule {
-  return (tree: Tree): Rule => {
-    const workspaceConfig: Buffer | null = tree.read('/angular.json');
-
-    if (!workspaceConfig) {
-      throw new SchematicsException(
-        'Could not find Angular workspace configuration',
-      );
-    }
-
-    // convert workspace to string
-    const workspaceContent = workspaceConfig.toString();
-
-    // parse workspace string into JSON object
-    const workspace: experimental.workspace.WorkspaceSchema = JSON.parse(
-      workspaceContent,
+  return async (tree: Tree): Promise<Rule> => {
+    const project: workspaces.ProjectDefinition = await findProject(
+      tree,
+      options.project,
     );
 
-    if (!options.project) {
-      options.project = workspace.defaultProject;
-    }
-
-    const projectName = options.project as string;
-
-    const project: WorkspaceProject = workspace.projects[projectName];
-
-    const projectType = project.projectType === 'application' ? 'app' : 'lib';
+    const projectType =
+      project.extensions.projectType === 'application' ? 'app' : 'lib';
 
     if (options.path === undefined) {
       options.path = `${project.sourceRoot}/${projectType}`;
@@ -115,14 +104,15 @@ export function component(options: ComponentModuleSchema): Rule {
         dasherize: strings.dasherize,
         name: options.name,
         controlValueAccessor: options.controlValueAccessor,
+        standalone: options.standalone,
       }),
       move(normalize(options.path as string)),
     ]);
 
-    return chain([
-      autoImport(options),
-      mergeWith(templateSource)
-    ]);
+    return chain(
+      options.standalone
+        ? [mergeWith(templateSource)]
+        : [autoImport(options), mergeWith(templateSource)],
+    );
   };
-
 }

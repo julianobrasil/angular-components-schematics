@@ -72,18 +72,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "components-schematics:build"
+            "buildTarget": "components-schematics:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "components-schematics:build:production"
+              "buildTarget": "components-schematics:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "components-schematics:build"
+            "buildTarget": "components-schematics:build"
           }
         },
         "test": {

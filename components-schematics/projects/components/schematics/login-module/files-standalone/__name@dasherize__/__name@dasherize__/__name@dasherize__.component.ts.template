@@ -3,32 +3,44 @@ import {
   Component,<% if(controlValueAccessor) { %>
   forwardRef,
   HostListener,<%}%>
-} from '@angular/core';<% if(controlValueAccessor) { %>
-import {
+} from '@angular/core';
+import {<% if(controlValueAccessor) { %>
   AbstractControl,
-  ControlValueAccessor,
+  ControlValueAccessor,<%}%>
+  FormBuilder,
+  FormGroup,<% if(controlValueAccessor) { %>
   NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,<% if(standalone) { %>
-  ReactiveFormsModule,<% } %>
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
   ValidationErrors,
-  Validator,
-} from '@angular/forms';<%}%><% if(standalone) { %>
-import {MatButtonModule} from '@angular/material/button';<% } %>
+  Validator,<%}%>
+  Validators,
+} from '@angular/forms';
+
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import {<% if(controlValueAccessor) { %>
-  type <%= classify(name) %>ComponentData,<%}%>
+  <%= classify(name) %>ComponentData,<%}%>
   <%= classify(name) %>ComponentService,
 } from './<%= name %>-component.service';
 
 @Component({
   selector: 'app-<%= name %>',
   templateUrl: './<%= name %>.component.html',
-  styleUrls: ['./<%= name %>.component.scss'],<% if(standalone) { %>
+  styleUrls: ['./<%= name %>.component.scss'],
   standalone: true,
-  imports: [MatButtonModule, ReactiveFormsModule],<% } %>
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,<% if(controlValueAccessor) { %>
   providers: [
-    <%= classify(name) %>ComponentService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => <%= classify(name) %>Component),
@@ -54,9 +66,16 @@ export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> impl
    */
   @HostListener('focusout') _onTouched: () => void;<%}%>
 
-  constructor(private _componentService: <%= classify(name) %>ComponentService) {}<% if(controlValueAccessor) { %>
+  /** Formulário do componente */
+  _loginForm: FormGroup = this.fb.group({
+    username: [null, Validators.required],
+    password: [null, Validators.required],
+  });
 
-  /** Implements da ControlValueAccessor */
+  constructor(private fb: FormBuilder,
+              private _componentService: <%= classify(name) %>ComponentService) {}<% if(controlValueAccessor) { %>
+
+  /** Implements ControlValueAccessor */
   writeValue(data: <%= classify(name) %>ComponentData): void {
     throw new Error('Method not implemented.');
   }
@@ -80,4 +99,12 @@ export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> impl
   validate(control: AbstractControl): ValidationErrors {
     throw new Error('Method not implemented.');
   }<%}%>
+
+  /** Submete o formulário de login */
+  onSubmit() {
+    if (this._loginForm.invalid) {
+      return;
+    }
+    this._componentService.login({...this._loginForm.value});
+  }
 }

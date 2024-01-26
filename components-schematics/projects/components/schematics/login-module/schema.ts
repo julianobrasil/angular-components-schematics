@@ -8,6 +8,9 @@ export interface Schema {
   // The name of the project.
   project?: string;
 
-  /** Wether to implements control value accessor interface */
+  /** Wether to implement control value accessor interface */
   controlValueAccessor?: boolean;
+
+  /** Whether to use standalone or not */
+  standalone?: boolean;
 }

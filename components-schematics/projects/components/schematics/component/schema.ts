@@ -13,4 +13,7 @@ export interface Schema {
 
   /** Wether to implements control value accessor interface */
   controlValueAccessor?: boolean;
+
+  /** Whether to generate a standalone or module based component */
+  standalone?: boolean;
 }

@@ -1,0 +1,26 @@
+import {Routes} from '@angular/router';
+
+import {<%= classify(name) %>RoutingComponent} from './<%= name %>-routing.component';
+
+/**
+ * This routing file is likely useless in most of the scenarios as you can use
+ * the loadComponent attribue of the router to lazy-load a component. But if you think
+ * you have a good use case for a route containing not only the lazy-loaded login component,
+ * then import this routes in a loadChildren attribute of the router:
+ *
+ * ```javascript
+ * loadChildren: () => import('PATH/TO/THIS/FILE').then(m => m.LOGIN_ROUTES)
+ * ```
+ */
+export const <%= classify(name).toUpperCase() %>_ROUTES: Routes = [
+  {
+    path: '',
+    component: <%= classify(name) %>RoutingComponent,
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('../<%= name %>/<%= name %>.component').then(m => m.<%= classify(name) %>Component),
+      }
+    ]
+  }
+];
