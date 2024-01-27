@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 <% if(controlValueAccessor) { %>
-export interface <%= classify(name) %>ComponentData {}
+export type <%= classify(name) %>ComponentData = {}
 <%}%>
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class <%= classify(name) %>ComponentService {}

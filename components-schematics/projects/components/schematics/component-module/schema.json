@@ -1,9 +1,14 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsSimpleComponentModule",
+  "$id": "SchematicsSimpleComponentModule",
   "title": "Simple Component Module",
   "type": "object",
   "properties": {
+    "controlValueAccessor": {
+      "type": "boolean",
+      "description": "Wether to implements the control value accessor interface",
+      "default": "true"
+    },
     "name": {
       "description": "The name of the module and component.",
       "type": "string"
@@ -20,14 +25,7 @@
       "$default": {
         "$source": "projectName"
       }
-    },
-    "controlValueAccessor": {
-      "type": "boolean",
-      "description": "Wether to implements the control value accessor interface",
-      "default": "true"
     }
   },
-  "required": [
-    "name"
-  ]
+  "required": ["name"]
 }

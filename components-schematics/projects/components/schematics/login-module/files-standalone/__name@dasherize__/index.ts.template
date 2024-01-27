@@ -1,0 +1,5 @@
+export {<%= classify(name) %>Component} from './<%= name %>/<%= name %>.component';<% if(controlValueAccessor) { %>
+export {<%= classify(name) %>ComponentData} from './<%= name %>/<%= name %>-component.service';<%}%>
+
+export {<%= classify(name) %>RoutingComponent} from './<%= name %>-routing/<%= name %>-routing.component';
+export {<%= classify(name).toUpperCase() %>_ROUTES} from './<%= name %>-routing/<%= name %>-routing.routes';

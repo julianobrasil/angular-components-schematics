@@ -7,7 +7,8 @@ I strongly recommend that you set npm to use git for windows bash to run [the sc
 
 `npm config set script-shell "C:\\Program Files\\git\\bin\\bash.exe"`
 
-But if you insist to use Powershell... good luck. Try the below alternative cmdlets
+But if you insist to use Powershell... good luck. Try the below alternative cmdlets and remember
+checking Angular documentation as they may come up with better ways of doing it (ROBOCOPY?)
 
 ### `cp --parents schematics/*/schema.json ../../dist/components/"`
 
