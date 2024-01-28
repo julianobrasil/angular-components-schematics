@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,<% if(controlValueAccessor) { %>
   forwardRef,
-  HostListener,<%}%>
+  ViewEncapsulation,<%}%>
 } from '@angular/core';<% if(controlValueAccessor) { %>
 import {
   AbstractControl,
@@ -38,21 +38,26 @@ import {<% if(controlValueAccessor) { %>
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => <%= classify(name) %>Component),
       multi: true,
-    }
+    },
   ],<%}%>
+  host: {
+    'class': 'app-<%= name %>',<% if(controlValueAccessor) { %>
+    '(focusout)': '_onTouched()',<%}%>
+  },
+  encapsulation: ViewEncapsulation.None,
 })
 export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> implements ControlValueAccessor, Validator<%}%> {<% if(controlValueAccessor) { %>
   /**
    * Keep a reference to the "OnChanged" function provided by angular
    * (ControlValueAccessor)
    */
-  private _onChange: (data: <%= classify(name) %>ComponentData) => void;
+  private _onChange!: (data: <%= classify(name) %>ComponentData) => void;
 
   /**
    * Keep a reference for the 'OnTouched' function provided by angular
    * (ControlValueAccessor)
    */
-  @HostListener('focusout') _onTouched: () => void;<%}%>
+  _onTouched!: () => void;<%}%>
 
   constructor(private _componentService: <%= classify(name) %>ComponentService) {}<% if(controlValueAccessor) { %>
 

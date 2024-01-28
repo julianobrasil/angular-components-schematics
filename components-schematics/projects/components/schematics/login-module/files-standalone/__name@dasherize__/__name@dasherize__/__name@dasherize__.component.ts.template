@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,<% if(controlValueAccessor) { %>
   forwardRef,
-  HostListener,<%}%>
+  ViewEncapsulation,<%}%>
 } from '@angular/core';
 import {<% if(controlValueAccessor) { %>
   AbstractControl,
@@ -17,10 +17,10 @@ import {<% if(controlValueAccessor) { %>
   Validators,
 } from '@angular/forms';
 
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import {<% if(controlValueAccessor) { %>
   <%= classify(name) %>ComponentData,<%}%>
@@ -52,19 +52,24 @@ import {<% if(controlValueAccessor) { %>
       multi: true,
     }
   ],<%}%>
+  host: {
+    'class': 'app-<%= name %>',<% if(controlValueAccessor) { %>
+    '(focusout)': '_onTouched()',<%}%>
+  },
+  encapsulation: ViewEncapsulation.None,
 })
 export class <%= classify(name) %>Component<% if(controlValueAccessor) { %> implements ControlValueAccessor, Validator<%}%> {<% if(controlValueAccessor) { %>
   /**
    * Keep a reference to the "OnChanged" function provided by angular
    * (ControlValueAccessor)
    */
-  private _onChange: (data: <%= classify(name) %>ComponentData) => void;
+  private _onChange!: (data: <%= classify(name) %>ComponentData) => void;
 
   /**
    * Keep a reference for the 'OnTouched' function provided by angular
    * (ControlValueAccessor)
    */
-  @HostListener('focusout') _onTouched: () => void;<%}%>
+  _onTouched!: () => void;<%}%>
 
   /** Formulário do componente */
   _loginForm: FormGroup = this.fb.group({
