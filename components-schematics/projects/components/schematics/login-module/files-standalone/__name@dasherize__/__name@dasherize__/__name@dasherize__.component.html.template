@@ -9,7 +9,7 @@
           <mat-form-field class="full-width" appearance="standard">
             <mat-label>Username</mat-label>
             <input matInput formControlName="username">
-            @if (_loginForm.get('username').hasError('required')) {
+            @if (_loginForm.get('username')?.hasError('required')) {
               <mat-error>
                 Password is <strong>required</strong>
               </mat-error>
@@ -18,7 +18,7 @@
           <mat-form-field class="full-width" appearance="standard">
             <mat-label>Password</mat-label>
             <input type="password" matInput formControlName="password">
-            @if (_loginForm.get('password').hasError('required')) {
+            @if (_loginForm.get('password')?.hasError('required')) {
               <mat-error>
                 Password is <strong>required</strong>
               </mat-error>

@@ -6,17 +6,17 @@
       </mat-card-header>
       <mat-card-content>
         <div class="col">
-          <mat-form-field class="full-width" appearance="standard">
+          <mat-form-field class="full-width" appearance="fill">
             <mat-label>Username</mat-label>
             <input matInput formControlName="username">
-            <mat-error *ngIf="_loginForm.controls['username'].hasError('required')">
+            <mat-error *ngIf="_loginForm.get('username')?.hasError('required')">
               Password is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <mat-form-field class="full-width" appearance="standard">
+          <mat-form-field class="full-width" appearance="fill">
             <mat-label>Password</mat-label>
             <input type="password" matInput formControlName="password">
-            <mat-error *ngIf="_loginForm.controls['password'].hasError('required')">
+            <mat-error *ngIf="_loginForm.get('password')?.hasError('required')">
               Password is <strong>required</strong>
             </mat-error>
           </mat-form-field>
