@@ -54,7 +54,7 @@ import {<% if(controlValueAccessor) { %>
   ],<%}%>
   host: {
     'class': 'app-<%= name %>',<% if(controlValueAccessor) { %>
-    '(focusout)': '_onTouched()',<%}%>
+    '(focusout)': '_onTouched?.()',<%}%>
   },
   encapsulation: ViewEncapsulation.None,
 })
